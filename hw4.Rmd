@@ -9,3 +9,24 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(dplyr)
+library(datasets)
+
+
+```
+
+Question 1
+```{r}
+
+```
+
+Question 2
+```{r}
+g <- ChickWeight %>%
+  group_by(Chick) %>%
+  summarize(n = n())
+
+
+```
+
