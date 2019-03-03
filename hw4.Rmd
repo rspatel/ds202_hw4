@@ -23,10 +23,19 @@ Question 1
 
 Question 2
 ```{r}
+# A vector of the chick numbers that have 12 measurements
 g <- ChickWeight %>%
   group_by(Chick) %>%
-  summarize(n = n())
+  summarize(n = n()) %>%
+  filter(n == 12) %>%
+  select(-n)
 
+Chicks <- ChickWeight
 
+Chicks$Chick <- as.numeric(Chicks$Chick)
+g$Chick <- as.numeric(g$Chick)
+
+complete <- filter(Chicks, Chicks$Chick %in% g$Chick)
+complete$Chick <- as.factor(complete$Chick)
 ```
 
