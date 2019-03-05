@@ -37,5 +37,17 @@ g$Chick <- as.numeric(g$Chick)
 
 complete <- filter(Chicks, Chicks$Chick %in% g$Chick)
 complete$Chick <- as.factor(complete$Chick)
+head(complete, 3)
+```
+Question 3:
+```{r}
+complete %>%
+  group_by(Chick) %>%
+  # Fix this part
+  mutate(zerow = weight) %>%
+  mutate(weightgain = weight - zerow) %>%
+  select(-zerow) %>%
+  head(3)
+         
 ```
 
