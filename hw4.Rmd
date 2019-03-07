@@ -12,12 +12,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(dplyr)
 library(datasets)
-
-
+library(ggplot2)
 ```
 
 Question 1
 ```{r}
+weight0 <- ChickWeight %>%
+  group_by(Chick) %>%
+  summarize(
+    freq = n(),
+    weight = mean(weight, na.rm = TRUE),
+    # Resulting in NA
+    sd = sd(weight, na.rm = TRUE) 
+  ) 
+weight0
 
 ```
 
@@ -41,13 +49,31 @@ head(complete, 3)
 ```
 Question 3:
 ```{r}
-complete %>%
+complete <- ChickWeight %>%
   group_by(Chick) %>%
-  # Fix this part
-  mutate(zerow = weight) %>%
+  mutate(zerow = weight[Time == 0]) %>%
   mutate(weightgain = weight - zerow) %>%
-  select(-zerow) %>%
-  head(3)
-         
+  select(-zerow) 
+
+head(complete, 3)
+```
+
+Question 4:
+```{r}
+ggplot(complete, aes(x= Diet, y = weight)) + geom_boxplot()
+```
+
+Question 5:
+```{r}
+large <- complete %>%
+  filter(weightgain == max(weightgain))
+
+largestGain <- max(large$weightgain)
+largestGain
+
+smallestGain <- min(large$weightgain)
+smallestGain
+
+ggplot(large, aes(x = Chick, y = weightgain, colour = Diet)) + geom_point()
 ```
 
